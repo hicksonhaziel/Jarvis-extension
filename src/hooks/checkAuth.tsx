@@ -16,7 +16,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   const [status, setStatus] = useState('Checking authentication...');
 
   // Handle logout
-  const handleLogout = useCallback(async () => {
+  const handleLogout = useCallback(async () => { 
     await api.logout();
     setIsAuthenticated(false);
     setWalletAddress(null);
