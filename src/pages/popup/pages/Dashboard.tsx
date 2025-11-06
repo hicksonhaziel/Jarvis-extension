@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus } from 'lucide-react' 
 import { motion } from 'framer-motion'
 import CreateDeployment from '@/components/modals/CreateDeployment'
 import Alert from '@/components/ui/Alert'
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-10">
+    <div className="flex-1 p-10 w-[500px] min-h-[700px]">
       {/* Top contents with voice command handler */}
       <Cards onVoiceCommandResult={handleVoiceCommandResult} />
 
@@ -55,9 +55,9 @@ const Home: React.FC = () => {
         className="mt-8 flex items-center justify-between"
       >
         <h2 className={`text-2xl font-bold tracking-[-0.015em] ${theme === 'light' ? 'text-black' : 'text-white'}`}>
-          Recent Activity
+          Recents
         </h2>
-        <button 
+        <button  
           onClick={() => setIsCreateDeploymentOPen(true)}
           className="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#00D2FF] h-12 px-6 text-base font-bold tracking-[0.015em] text-black transition-transform hover:scale-105"
         >

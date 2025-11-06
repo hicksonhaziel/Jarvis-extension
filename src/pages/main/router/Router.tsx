@@ -10,7 +10,7 @@ const Router: React.FC = () => {
   if (!currentRouteObj) {
     const HomeComponent = routes[0].component
     return <HomeComponent />
-  }
+  } 
 
   const Component = currentRouteObj.component
   return <Component />

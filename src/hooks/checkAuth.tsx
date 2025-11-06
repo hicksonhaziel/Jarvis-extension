@@ -14,6 +14,22 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   const [isChecking, setIsChecking] = useState(true);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [status, setStatus] = useState('Checking authentication...');
+  const [isPopup, setIsPopup] = useState(false);
+
+  // Check if we're in popup or full page
+  useEffect(() => {
+    const checkContext = async () => {
+      try {
+        const url = window.location.href;
+        // Check if we're in the popup (small window) or full page
+        setIsPopup(url.includes('/popup/') || window.innerWidth < 600);
+      } catch (error) {
+        setIsPopup(false);
+      }
+    };
+    
+    checkContext();
+  }, []);
 
   // Handle logout
   const handleLogout = useCallback(async () => { 
@@ -48,7 +64,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
       if (!targetTab?.id) {
         setStatus('Error: Could not create web app tab');
         return;
-      }
+      } 
 
       // Send message to content script to open auth
       sendMessageWithRetry(targetTab.id, { action: 'open_auth' }, 5, 500)
@@ -82,6 +98,14 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
         if (!hasAuth) {
           setIsChecking(false);
           setStatus('Please connect your wallet');
+          
+          // If in popup and not authenticated, open full page
+          if (isPopup) {
+            chrome.tabs.create({ 
+              url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
+            });
+            window.close();
+          }
           return;
         }
 
@@ -114,6 +138,14 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
             // Refresh failed, need new auth
             setIsChecking(false);
             setStatus('Session expired, please reconnect wallet');
+            
+            // If in popup and session expired, open full page
+            if (isPopup) {
+              chrome.tabs.create({ 
+                url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
+              });
+              window.close();
+            }
           }
         }
       } catch (error) {
@@ -121,10 +153,17 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
         if (!isMounted) return;
         setIsChecking(false);
         setStatus('Please connect your wallet');
+        
+        // If in popup and error, open full page
+        if (isPopup) {
+          chrome.tabs.create({ 
+            url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
+          });
+          window.close();
+        }
       }
     };
 
-    
     checkSession();
 
     // listener for wallet connection events
@@ -166,7 +205,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
       isMounted = false;
       listener.cleanup?.();
     };
-  }, []);
+  }, [isPopup]);
 
   // Auto-refresh token before expiry
   useEffect(() => {
@@ -184,6 +223,14 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           // Refresh failed, logout
           setIsAuthenticated(false);
           setStatus('Session expired, please reconnect wallet');
+          
+          // If in popup, redirect to full page
+          if (isPopup) {
+            chrome.tabs.create({ 
+              url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
+            });
+            window.close();
+          }
         } else {
           console.log('Token refreshed successfully');
         }
@@ -194,33 +241,33 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
       console.log('Cleaning up token refresh interval');
       clearInterval(intervalId);
     };
-  }, [isAuthenticated, api]);
+  }, [isAuthenticated, api, isPopup]);
 
   // loading state
   if (isChecking) {
     return (
-      <div className="flex items-center justify-center min-h-[600px] min-w-80 bg-gray-50">
-        <div className="text-center p-8">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mb-4"></div>
-          <p className="text-gray-700 font-medium">{status}</p>
+      <div className="w-80 h-[600px] flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600 mb-3"></div>
+          <p className="text-gray-700 text-sm">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // connect wallet screen
-  if (!isAuthenticated) { 
+  // connect wallet screen - only shown in full page mode
+  if (!isAuthenticated && !isPopup) { 
     return (
-      <div className="flex items-center justify-center min-h-[600px] min-w-80 bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="rounded-2xl glassmorphism-card border-1 border-red-500 p-8 max-w-md w-full mx-4">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="rounded-2xl glassmorphism-card border border-gray-200 p-8 max-w-md w-full mx-4">
           <div className="text-center mb-6">
             <div className="rounded-full flex items-center justify-center my-16 mx-auto mb-4">
-              <img src="public/icons/icon128.png" alt="Jarvis" className="w-8 h-8" />
+              <img src="public/icons/icon128.png" alt="Jarvis" className="w-16 h-16" />
             </div>
-            <h1 className="text-2xl sm:text-sm xs:text-xs font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Welcome To Jarvis
             </h1>
-            <p className="sm:text-sm xs:text-xs text-gray-600 mb-6">
+            <p className="text-sm text-gray-600 mb-6">
               {status}
             </p>
           </div>
@@ -237,19 +284,24 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
               </>
             ) : (
               <>
-                <span className='sm:text-sm xs:text-xs'>Connect Wallet</span>
+                <span>Connect Wallet</span>
               </>
             )}
           </button>
 
           {api.error && (
             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 text-sm sm:text-sm xs:text-xs">{api.error}</p>
+              <p className="text-red-800 text-sm">{api.error}</p>
             </div>
           )}
         </div>
       </div>
     );
+  }
+
+  // If not authenticated and in popup, return null (will redirect)
+  if (!isAuthenticated && isPopup) {
+    return null;
   }
 
   // Authenticated app

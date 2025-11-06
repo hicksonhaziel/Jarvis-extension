@@ -7,10 +7,10 @@ import Alert from '@/components/ui/Alert'
 import Deployment from '@/components/common/Deployment'
 import { useTheme } from '@/components/layout/ThemeContext'
 import { useApi } from '@/hooks/useApi'
-import type { DeploymentListItem } from '@/types/api'
+import type { DeploymentListItem } from '@/types/api' 
 
 const Deployments: React.FC = () => {
-  const { theme, toggleTheme, loading: themeLoading } = useTheme();
+  const { theme, loading: themeLoading } = useTheme();
   const { listDeployments, loading: apiLoading } = useApi();
   
   const [deployments, setDeployments] = useState<DeploymentListItem[]>([]);
@@ -84,17 +84,17 @@ const Deployments: React.FC = () => {
   };
 
   const handleDeploymentCreated = () => {
-    fetchDeployments(); // Refresh list after creating deployment
+    fetchDeployments();
   };
 
   const handleDeploymentDeleted = () => {
-    fetchDeployments(); // Refresh list after deleting deployment
+    fetchDeployments();
   };
 
   if (themeLoading) return null;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="w-[500px] min-h-[700px] overflow-hidden">
       {isDeploymentId && (
         <Deployment 
           setIsDeploymentId={setIsDeploymentId}
@@ -102,43 +102,46 @@ const Deployments: React.FC = () => {
         />
       )}
       {!isDeploymentId && (
-        <main className="flex-1 p-8 flex flex-col">
+        <main className="w-full h-full px-4 py-6 flex flex-col overflow-y-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex justify-between items-center mb-8"
+            className="mb-6"
           >
-            <div className="flex items-center gap-4">
-              <h2 className={`text-3xl font-bold ${theme === "light" ? 'text-black' : 'text-white'}`}>
-                Deployments
-                <span className="text-gray-500 text-2xl">({deployments.length})</span>
-              </h2>
-              <button
-                onClick={handleRefresh}
-                disabled={isRefreshing || apiLoading}
-                className="p-2 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
-                title="Refresh deployments"
-              >
-                <RefreshCw 
-                  size={20} 
-                  className={`${theme === "light" ? 'text-black' : 'text-white'} ${isRefreshing ? 'animate-spin' : ''}`}
-                />
-              </button>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <h2 className={`text-2xl font-bold ${theme === "light" ? 'text-black' : 'text-white'}`}>
+                  Deployments
+                </h2>
+                <span className="text-gray-500 text-lg">({deployments.length})</span>
+                <button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing || apiLoading}
+                  className="p-1.5 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+                  title="Refresh deployments"
+                >
+                  <RefreshCw 
+                    size={16} 
+                    className={`${theme === "light" ? 'text-black' : 'text-white'} ${isRefreshing ? 'animate-spin' : ''}`}
+                  />
+                </button>
+              </div>
             </div>
-            <div className="relative">
+            
+            <div className="relative w-full">
               <input 
                 type="text" 
                 value={searchTerm}
-                placeholder='Search by image, status, or ID...'
+                placeholder='Search...'
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-[#1A1B3A] text-white border border-[#2d3748] rounded-xl py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-[#00D2FF] transition-all w-72"
+                className={`${theme === "light" ? 'bg-white border-gray-300 text-black' : 'bg-[#1A1B3A] text-white border-[#2d3748]'} border rounded-lg py-2 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-[#00D2FF] transition-all w-full text-sm`}
               />
               <SearchIcon
-                size={16}
+                size={14}
                 className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-500'
               />
             </div>
@@ -147,24 +150,24 @@ const Deployments: React.FC = () => {
           {/* Loading State */}
           {apiLoading && !isRefreshing && (
             <div className="flex items-center justify-center py-20">
-              <RefreshCw size={32} className="animate-spin text-[#00D2FF]" />
+              <RefreshCw size={28} className="animate-spin text-[#00D2FF]" />
             </div>
           )}
 
           {/* Deployments List */}
           {!apiLoading && filteredDeployments.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div className="space-y-4 pb-20">
               {paginatedDeployments.map((deployment) => (
                 <motion.div
                   key={deployment.deployment_id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className={`glassmorphism-card border ${theme === "light" ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} overflow-hidden shadow-lg rounded-xl p-6 flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1`}
+                  className={`border ${theme === "light" ? "border-black/10 text-black bg-indigo-100" : "border-white/10 text-white bg-gray-800"} overflow-hidden shadow-md rounded-lg p-4 flex flex-col justify-between transition-all duration-300 hover:shadow-lg`}
                 >
                   <div>
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className={`font-bold text-xl ${theme === "light" ? 'text-black' : 'text-white'}`}>
+                    <div className="flex justify-between items-start mb-3 gap-2">
+                      <h3 className={`font-bold text-base ${theme === "light" ? 'text-black' : 'text-white'} truncate flex-1`}>
                         {deployment.image}
                       </h3>
                       <span 
@@ -178,7 +181,7 @@ const Deployments: React.FC = () => {
                             ? "bg-red-500/20 text-red-400"
                             : "bg-gray-500/20 text-gray-400"
                           }
-                          flex items-center text-xs font-semibold px-2 py-1 rounded-full
+                          flex items-center text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap
                         `}
                       >
                         <span 
@@ -192,27 +195,27 @@ const Deployments: React.FC = () => {
                               ? "bg-red-400"
                               : "bg-gray-400"
                             }
-                            w-2 h-2 rounded-full mr-2
+                            w-1.5 h-1.5 rounded-full mr-1.5
                           `}
                         ></span>
                         {deployment.status}
                       </span>
                     </div>
-                    <div className="space-y-3 text-gray-500 text-sm">
-                      <p>
-                        <strong>Deployment ID:</strong> {deployment.deployment_id}
+                    <div className="space-y-2 text-gray-500 text-xs">
+                      <p className="break-all">
+                        <strong>ID:</strong> {deployment.deployment_id}
                       </p>
                       <p>
-                        <strong>Created At:</strong> {new Date(deployment.created_at).toLocaleString()}
+                        <strong>Created:</strong> {new Date(deployment.created_at).toLocaleString()}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-end gap-2 mt-6">
+                  <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-gray-700">
                     <button
                       onClick={() => viewDeploymentDetails(deployment.deployment_id)} 
-                      className={`text-xs font-semibold text-gray-500 ${theme === "light" ? '' : 'hover:text-white'} transition-colors`}
+                      className={`text-xs font-semibold text-gray-500 ${theme === "light" ? 'hover:text-black' : 'hover:text-white'} transition-colors`}
                     >
-                      View Details 
+                      View
                     </button>
                     <button 
                       onClick={() => handleDeleteClick(deployment)}
@@ -225,10 +228,10 @@ const Deployments: React.FC = () => {
               ))}
             </div>
           ) : !apiLoading && (
-            <div className="flex flex-col items-center justify-center text-gray-400 mt-16 flex-1">
-              <Inbox size={48} className="mb-4 text-gray-500" />
-              <p className="text-lg font-semibold">No deployments found</p>
-              <p className="text-sm text-gray-500">
+            <div className="flex flex-col items-center justify-center text-gray-400 py-16">
+              <Inbox size={40} className="mb-3 text-gray-500" />
+              <p className="text-base font-semibold">No deployments found</p>
+              <p className="text-xs text-gray-500 text-center px-4">
                 Create your first deployment to get started 
               </p>
             </div> 
@@ -236,7 +239,7 @@ const Deployments: React.FC = () => {
 
           {/* Pagination */}
           {filteredDeployments.length > 0 && totalPages > 1 && (
-            <div className="mt-auto flex justify-center items-center sticky bottom-0 bg-[#0f0f1f] py-4">
+            <div className="mt-6 flex justify-center items-center pb-4">
               <nav className="flex items-center gap-2">
                 <button
                   onClick={handlePrevPage}
@@ -244,12 +247,12 @@ const Deployments: React.FC = () => {
                   className={`p-2 rounded-lg transition-colors ${
                     currentPage === 1
                       ? "text-gray-500 cursor-not-allowed"
-                      : "text-white hover:bg-gray-300 hover:text-gray-800"
+                      : `${theme === "light" ? 'text-black hover:bg-gray-300' : 'text-white hover:bg-gray-700'}`
                   }`}
                 >
-                  <ArrowLeft size={24} />
+                  <ArrowLeft size={20} />
                 </button>
-                <span className="px-4 py-2 rounded-lg bg-[#00D2FF] text-gray-800 font-bold text-sm">
+                <span className="px-3 py-1.5 rounded-lg bg-[#00D2FF] text-gray-800 font-bold text-xs">
                   {currentPage} / {totalPages}
                 </span>
                 <button
@@ -258,10 +261,10 @@ const Deployments: React.FC = () => {
                   className={`p-2 rounded-lg transition-colors ${
                     currentPage === totalPages
                       ? "text-gray-500 cursor-not-allowed"
-                      : "text-white hover:bg-gray-300 hover:text-gray-800"
+                      : `${theme === "light" ? 'text-black hover:bg-gray-300' : 'text-white hover:bg-gray-700'}`
                   }`}
                 >
-                  <ArrowRight size={24} />
+                  <ArrowRight size={20} />
                 </button>
               </nav>
             </div>
@@ -274,9 +277,9 @@ const Deployments: React.FC = () => {
         dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
         whileDrag={{ scale: 1.1 }} 
         onClick={() => setIsCreateDeploymentOpen(true)}
-        className="fixed bottom-8 right-8 bg-[#00D2FF] hover:bg-cyan-500 text-white font-bold rounded-full h-16 w-16 flex items-center justify-center shadow-lg transform hover:scale-105 transition-all duration-300"
+        className="fixed bottom-6 right-6 bg-[#00D2FF] hover:bg-cyan-500 text-white font-bold rounded-full h-14 w-14 flex items-center justify-center shadow-lg transform hover:scale-105 transition-all duration-300 z-50"
       >
-        <Plus size={24} className='text-gray-100'/>
+        <Plus size={22} className='text-gray-100'/>
       </motion.button>
 
       {/* Modals */}

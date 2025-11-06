@@ -77,36 +77,6 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
   return (
     <div>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* Balance Card */}
-        <motion.div 
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          whileHover={{ 
-            y: -10
-          }}
-          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} col-span-1 flex flex-col items-center justify-center rounded-xl border  p-6 shadow-lg`}
-        > 
-          <h3 className={`text-lg font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>AKT Balance</h3>
-          <p className="text-2xl font-bold tracking-tight text-[#00D2FF]">123.45 AKT</p>
-        </motion.div>
-
-        {/* Deployment Count Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 23 }} 
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          whileHover={{ 
-            y: -10
-          }}
-          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} flex justify-center item-center rounded-xl border p-6 shadow-lg`}
-        >
-          <div className="flex flex-col items-center justify-center">
-            <p className={`text-base font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>Total Deployments</p>
-            <p className={`text-2xl font-bold ${ theme === 'light' ? 'text-gray-600' : 'text-white'}`}>{deploymentCount}</p>
-          </div>
-        </motion.div> 
-
         {/* Voice Command Card */}
         <motion.div
           initial={{ opacity: 0, y: 26 }}
@@ -150,6 +120,37 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
             )}
           </div>
         </motion.div>
+        
+        {/* Balance Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          whileHover={{ 
+            y: -10
+          }}
+          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} col-span-1 flex flex-col items-center justify-center rounded-xl border  p-6 shadow-lg`}
+        > 
+          <h3 className={`text-lg font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>AKT Balance</h3>
+          <p className="text-2xl font-bold tracking-tight text-[#00D2FF]">123.45 AKT</p>
+        </motion.div>
+
+        {/* Deployment Count Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 23 }} 
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          whileHover={{ 
+            y: -10
+          }}
+          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} flex justify-center item-center rounded-xl border p-6 shadow-lg`}
+        >
+          <div className="flex flex-col items-center justify-center">
+            <p className={`text-base font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>Total Deployments</p>
+            <p className={`text-2xl font-bold ${ theme === 'light' ? 'text-gray-600' : 'text-white'}`}>{deploymentCount}</p>
+          </div>
+        </motion.div> 
+
       </div>
     </div>
   )

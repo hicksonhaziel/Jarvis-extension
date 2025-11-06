@@ -40,7 +40,7 @@ const Settings = () => {
 
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex w-[500px] min-h-[700px]">
       <main className="flex-1 p-8 flex flex-col">
 
         {/* Header */}
@@ -128,7 +128,7 @@ const Settings = () => {
                      "Update"
                     )}
                     </button>
-                  </div>
+                  </div> 
                 </footer>
               </div>
             </motion.div>
