@@ -5,12 +5,10 @@ import CreateDeployment from '@/components/modals/CreateDeployment'
 import DeleteDeployment from '@/components/modals/DeleteDeployment'
 import Alert from '@/components/ui/Alert'
 import Deployment from '@/components/common/Deployment'
-import { useTheme } from '@/components/layout/ThemeContext'
 import { useApi } from '@/hooks/useApi'
 import type { DeploymentListItem } from '@/types/api' 
 
 const Deployments: React.FC = () => {
-  const { theme, loading: themeLoading } = useTheme();
   const { listDeployments, loading: apiLoading } = useApi();
   
   const [deployments, setDeployments] = useState<DeploymentListItem[]>([]);
@@ -27,7 +25,7 @@ const Deployments: React.FC = () => {
 
   const pageLimit = 10;
 
-  // Fetch deployments on mount and page change
+  
   useEffect(() => {
     fetchDeployments();
   }, [currentPage]);
@@ -91,10 +89,9 @@ const Deployments: React.FC = () => {
     fetchDeployments();
   };
 
-  if (themeLoading) return null;
 
   return (
-    <div className="w-[500px] min-h-[700px] overflow-hidden">
+    <div className=" overflow-hidden">
       {isDeploymentId && (
         <Deployment 
           setIsDeploymentId={setIsDeploymentId}
@@ -111,7 +108,7 @@ const Deployments: React.FC = () => {
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <h2 className={`text-2xl font-bold ${theme === "light" ? 'text-black' : 'text-white'}`}>
+                <h2 className={`text-2xl font-bold text-whiteb`}>
                   Deployments
                 </h2>
                 <span className="text-gray-500 text-lg">({deployments.length})</span>
@@ -123,7 +120,7 @@ const Deployments: React.FC = () => {
                 >
                   <RefreshCw 
                     size={16} 
-                    className={`${theme === "light" ? 'text-black' : 'text-white'} ${isRefreshing ? 'animate-spin' : ''}`}
+                    className={`text-white ${isRefreshing ? 'animate-spin' : ''}`}
                   />
                 </button>
               </div>
@@ -138,7 +135,7 @@ const Deployments: React.FC = () => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className={`${theme === "light" ? 'bg-white border-gray-300 text-black' : 'bg-[#1A1B3A] text-white border-[#2d3748]'} border rounded-lg py-2 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-[#00D2FF] transition-all w-full text-sm`}
+                className={`bg-[#1A1B3A] text-white border-[#2d3748] border rounded-lg py-2 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-[#00D2FF] transition-all w-full text-sm`}
               />
               <SearchIcon
                 size={14}
@@ -163,11 +160,11 @@ const Deployments: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className={`border ${theme === "light" ? "border-black/10 text-black bg-indigo-100" : "border-white/10 text-white bg-gray-800"} overflow-hidden shadow-md rounded-lg p-4 flex flex-col justify-between transition-all duration-300 hover:shadow-lg`}
+                  className={`border border-white/10 text-white bg-gray-800 overflow-hidden shadow-md rounded-lg p-4 flex flex-col justify-between transition-all duration-300 hover:shadow-lg`}
                 >
                   <div>
                     <div className="flex justify-between items-start mb-3 gap-2">
-                      <h3 className={`font-bold text-base ${theme === "light" ? 'text-black' : 'text-white'} truncate flex-1`}>
+                      <h3 className={`font-bold text-base text-white truncate flex-1`}>
                         {deployment.image}
                       </h3>
                       <span 
@@ -213,7 +210,7 @@ const Deployments: React.FC = () => {
                   <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-gray-700">
                     <button
                       onClick={() => viewDeploymentDetails(deployment.deployment_id)} 
-                      className={`text-xs font-semibold text-gray-500 ${theme === "light" ? 'hover:text-black' : 'hover:text-white'} transition-colors`}
+                      className={`text-xs font-semibold text-gray-500 hover:text-white transition-colors`}
                     >
                       View
                     </button>
@@ -247,7 +244,7 @@ const Deployments: React.FC = () => {
                   className={`p-2 rounded-lg transition-colors ${
                     currentPage === 1
                       ? "text-gray-500 cursor-not-allowed"
-                      : `${theme === "light" ? 'text-black hover:bg-gray-300' : 'text-white hover:bg-gray-700'}`
+                      : 'text-white hover:bg-gray-700'
                   }`}
                 >
                   <ArrowLeft size={20} />
@@ -261,7 +258,7 @@ const Deployments: React.FC = () => {
                   className={`p-2 rounded-lg transition-colors ${
                     currentPage === totalPages
                       ? "text-gray-500 cursor-not-allowed"
-                      : `${theme === "light" ? 'text-black hover:bg-gray-300' : 'text-white hover:bg-gray-700'}`
+                      : 'text-white hover:bg-gray-700'
                   }`}
                 >
                   <ArrowRight size={20} />

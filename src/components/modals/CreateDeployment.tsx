@@ -41,7 +41,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 4));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  // Fetch price estimate when configuration changes
+  // Fetch price estimate 
   useEffect(() => {
     if (step === 3 && selectedType) {
       fetchPriceEstimate();
@@ -98,31 +98,31 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.4 }}
-            className={`w-[500px] max-w-4xl h-[550px] border-black/10 text-white bg-gray-900 opacity-5 flex flex-col  glassmorphism-card overflow-hidden border shadow-xl rounded-xl duration-300`}
+            className={`w-[250px] max-w-4xl h-[275px] border-black/10 text-white bg-gray-900 opacity-5 flex flex-col  glassmorphism-card overflow-hidden border shadow-xl rounded-xl duration-300`}
           >
             {/* Header */}
-            <header className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-2xl font-bold tracking-tight text-white">
+            <header className="flex items-center justify-between p-3 border-b border-white/10">
+              <h2 className="text-1xl font-bold tracking-tight text-white">
                 Create New Deployment
               </h2>
               <button
                 onClick={onClose}
                 className="text-white/50 hover:text-white transition-colors"
               >
-                <X size={24} />
+                <X size={18} />
               </button>
             </header>
 
             {/* Progress */}
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-2">
+            <div className="p-3">
+              <div className="flex items-center justify-between mb-1">
                 <p className="text-sm font-medium text-white/70">
                   Step {step} of 4
                 </p>
               </div>
-              <div className="w-full bg-gray-900 rounded-full h-2">
+              <div className="w-full bg-gray-900 rounded-full h-1">
                 <motion.div
-                  className="bg-[#00D2FF] h-2 rounded-full"
+                  className="bg-red-500 h-1 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${(step / 4) * 100}%` }}
                   transition={{ duration: 0.4 }}
@@ -131,7 +131,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
             </div>
 
             {/* Steps */}
-            <main className="flex-grow p-6 overflow-y-auto">
+            <main className="flex-grow p-3 overflow-y-auto">
               <AnimatePresence mode="wait">
                 {/* Step 1*/}
                 {step === 1 && (
@@ -142,10 +142,10 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <h3 className="text-xl font-bold mb-4 text-white">
+                    <h3 className="text-lg font-bold mb-3 text-white">
                       Select Deployment Type
                     </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {deployment_types.map((deployment_type) => (
                         <label
                           key={deployment_type.id}
@@ -162,14 +162,14 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                             }
                           />
                           <div
-                            className={`p-6 flex justify-center rounded-lg text-center border-2 transition-all duration-300
+                            className={`p-3 flex justify-center rounded-lg text-center border-1 transition-all duration-300
                             ${
                               selectedType === deployment_type.value
-                                ? "border-cyan-200 bg-gray-900/50"
+                                ? "border-red-200 bg-gray-900/50"
                                 : "border-transparent bg-gray-900"
-                            } group-hover:border-cyan-200`}
+                            } group-hover:border-red-200`}
                           >
-                            <p className="font-bold text-lg text-white">
+                            <p className="font-bold text-md text-white">
                               {deployment_type.tag}
                             </p>
                           </div>
@@ -188,7 +188,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <h3 className="text-xl font-bold mb-4 text-white">
+                    <h3 className="text-xl font-bold mb-2 text-white">
                       Deployment Configuration
                     </h3>
                     <div className="space-y-4">
@@ -201,7 +201,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                           placeholder="nginx:latest"
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-2">
                         <div>
                           <label className="block text-white/70 mb-1">CPU Cores</label>
                           <input
@@ -278,24 +278,24 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <h3 className="text-xl font-bold mb-4 text-white">
+                    <h3 className="text-lg font-bold mb-2 text-white">
                       Payment Information
                     </h3>
                     
                     {estimating && (
-                      <div className="mb-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-300 text-sm">
+                      <div className="mb-3 p-2 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-300 text-sm">
                         Calculating estimated price...
                       </div>
                     )}
                     
                     {estimatedPrice !== null && !estimating && (
-                      <div className="mb-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded">
+                      <div className="mb-2 p-2 bg-cyan-500/10 border border-cyan-500/30 rounded">
                         <p className="text-cyan-300 text-sm">Estimated monthly cost</p>
-                        <p className="text-white text-2xl font-bold">${estimatedPrice.toFixed(2)}</p>
+                        <p className="text-white text-xl font-bold">${estimatedPrice.toFixed(2)}</p>
                       </div>
                     )}
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2">
                       <div>
                         <label className="block text-white/70 mb-1">Amount</label>
                         <input
@@ -333,11 +333,11 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <h3 className="text-xl font-bold mb-4 text-white">
+                    <h3 className="text-lg font-bold mb-2 text-white">
                       Review & Confirm
                     </h3>
                     <div className="space-y-4">
-                      <div className="bg-gray-900 p-4 rounded-lg text-white/80 space-y-2">
+                      <div className="bg-gray-900 p-2 rounded-lg text-white/80 space-y-2">
                         <p><span className="font-bold text-white">Type:</span> {selectedType}</p>
                         <p><span className="font-bold text-white">Image:</span> {image}</p>
                         <p><span className="font-bold text-white">CPU:</span> {cpu} cores</p>
@@ -354,19 +354,19 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
               </AnimatePresence>
             </main>
 
-            <footer className="flex items-center justify-between p-5 border-t border-white/10">
+            <footer className="flex items-center justify-between p-3 border-t border-white/10">
               <button
                 onClick={onClose}
                 disabled={isDeploying}
-                className="px-6 py-2 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
+                className="px-3 py-1 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
-             <div className="flex items-center gap-4">
+             <div className="flex items-center gap-2">
                <button
                  onClick={prevStep}
                  disabled={step === 1 || isDeploying}
-                 className={`px-6 py-2 rounded-lg font-bold ${
+                 className={`px-3 py-1 rounded-lg font-bold ${
                    step === 1
                    ? "text-white/50 bg-gray-900 cursor-not-allowed"
                    : "text-white bg-transparent border border-white/20 hover:bg-white/10"
@@ -379,12 +379,12 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                   <button
                     onClick={handleDeploy}
                     disabled={isDeploying}
-                    className="px-6 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-[#00D2FF] hover:bg-[#00D2FF] hover:text-white shadow-lg shadow-cyan-200/20 disabled:opacity-50"
+                    className="px-3 py-1 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-[#00D2FF] hover:bg-[#00D2FF] hover:text-white shadow-lg shadow-cyan-200/20 disabled:opacity-50"
                   >
                     {isDeploying ? (
                       <>
                         <svg
-                          className="animate-spin h-5 w-5 text-white"
+                          className="animate-spin h-3 w-3 text-white"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
@@ -413,7 +413,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                 <button
                   onClick={nextStep}
                   disabled={step === 1 && !selectedType}
-                  className={`px-6 py-2 rounded-lg font-bold ${
+                  className={`px-3 py-1 rounded-lg font-bold ${
                     step === 1 && !selectedType
                     ? "text-white/50 bg-gray-900 cursor-not-allowed"
                     : "text-black bg-[#00D2FF] hover:bg-[#00D2FF] hover:text-white shadow-lg shadow-cyan-200/20"

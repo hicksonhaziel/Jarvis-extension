@@ -1,7 +1,6 @@
 import { useApi } from "@/hooks/useApi"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { useTheme } from '@/components/layout/ThemeContext'
 import { MicIcon } from "lucide-react"
 import { useAudioRecorder } from '@/hooks/useAudioRecoder'
 
@@ -10,7 +9,6 @@ interface CardsProps {
 }
 
 export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
-  const { theme, loading: themeLoading } = useTheme();
   const { listDeployments, processVoiceCommand } = useApi();
 
   const [isRecording, setIsRecording] = useState(false);
@@ -72,7 +70,7 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
     }
   }, [duration, isRecording]);
 
-  if (themeLoading) return null; // avoid flicker on load
+  
 
   return (
     <div>
@@ -85,15 +83,15 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
           whileHover={{ 
             y: -10
           }}
-          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} col-span-1 flex items-center justify-center rounded-xl border  p-6 shadow-lg`} 
+          className={`glassmorphism-card border-white/10 text-white bg-gray-900 opacity-5 col-span-1 flex items-center justify-center rounded-xl border  p-6 shadow-lg`} 
         >
           <div className="flex flex-col items-center justify-center">
             <button 
               onClick={() => setIsRecording(!isRecording)}
               disabled={Boolean(error && !permissionGranted)}
-              className={`group flex h-20 w-20 items-center justify-center rounded-full bg-[#00D2FF] transition-all duration-300 hover:scale-110 ${isRecording ? 'animate-pulse' : ''} disabled:opacity-50 disabled:cursor-not-allowed`}
+              className={`group flex h-20 w-20 items-center justify-center rounded-full bg-red-500 transition-all duration-300 hover:scale-110 ${isRecording ? 'animate-pulse' : ''} disabled:opacity-50 disabled:cursor-not-allowed`}
             >
-              <MicIcon size={32} className="text-gray-800"/>
+              <MicIcon size={32} className="text-gray-50"/>
             </button>
 
             {/* Status Messages */}
@@ -129,10 +127,10 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
           whileHover={{ 
             y: -10
           }}
-          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} col-span-1 flex flex-col items-center justify-center rounded-xl border  p-6 shadow-lg`}
+          className={`glassmorphism-card border-white/10 text-white bg-gray-900 opacity-5 col-span-1 flex flex-col items-center justify-center rounded-xl border  p-6 shadow-lg`}
         > 
-          <h3 className={`text-lg font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>AKT Balance</h3>
-          <p className="text-2xl font-bold tracking-tight text-[#00D2FF]">123.45 AKT</p>
+          <h3 className={`text-lg font-medium text-gray-300`}>AKT Balance</h3>
+          <p className="text-2xl font-bold tracking-tight text-red-500">123.45 AKT</p>
         </motion.div>
 
         {/* Deployment Count Card */}
@@ -143,11 +141,11 @@ export const Cards = ({ onVoiceCommandResult }: CardsProps) => {
           whileHover={{ 
             y: -10
           }}
-          className={`glassmorphism-card ${ theme === 'light' ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} flex justify-center item-center rounded-xl border p-6 shadow-lg`}
+          className={`glassmorphism-card border-white/10 text-white bg-gray-900 opacity-5 flex justify-center item-center rounded-xl border p-6 shadow-lg`}
         >
           <div className="flex flex-col items-center justify-center">
-            <p className={`text-base font-medium ${ theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>Total Deployments</p>
-            <p className={`text-2xl font-bold ${ theme === 'light' ? 'text-gray-600' : 'text-white'}`}>{deploymentCount}</p>
+            <p className={`text-base font-medium text-gray-300`}>Total Deployments</p>
+            <p className={`text-2xl font-bold text-white`}>{deploymentCount}</p>
           </div>
         </motion.div> 
 

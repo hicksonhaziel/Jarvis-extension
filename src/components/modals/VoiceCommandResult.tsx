@@ -28,23 +28,23 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.4 }}
-            className="w-[500px] max-w-4xl h-[550px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
+            className="w-[250px] max-w-4xl h-[275px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
           >
             {/* Header */}
-            <header className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-2xl font-bold tracking-tight text-white">
+            <header className="flex items-center justify-between p-3 border-b border-white/10">
+              <h2 className="text-xl font-bold tracking-tight text-white">
                 Voice Command Result
               </h2>
               <button
                 onClick={onClose}
                 className="text-white/50 hover:text-white transition-colors disabled:opacity-50"
               >
-                <X size={24} />
+                <X size={18} />
               </button>
             </header>
 
             
-            <main className="flex-grow p-6 overflow-y-auto text-white space-y-6">
+            <main className="flex-grow p-3 overflow-y-auto text-white space-y-6">
 
               {/* Voice Input */}
               <div className="space-y-2">
@@ -59,12 +59,12 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
               {/* Command Details */}
               <div className="space-y-2">
                 <p className="text-xs uppercase text-white/50 mb-2">Command Details</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white/5 p-2 rounded-lg border border-white/10">
                     <p className="text-xs text-white/50 mb-1">Action</p>
                     <p className="font-mono text-sm">{commandAction}</p>
                   </div>
-                  <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                  <div className="bg-white/5 p-2 rounded-lg border border-white/10">
                     <p className="text-xs text-white/50 mb-1">Image</p>
                     <p className="font-mono text-sm">{commandImage}</p>
                   </div>
@@ -75,9 +75,9 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
               <div className="space-y-2">
                 <p className="text-xs uppercase text-white/50 mb-2">Deployment Result</p>
                 <div className="space-y-3">
-                  <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                  <div className="bg-white/5 p-2 rounded-lg border border-white/10">
                     <p className="text-xs text-white/50 mb-1">Status</p>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-bold ${
                       resultStatus === 'success' 
                         ? 'bg-green-500 text-white' 
                         : 'bg-yellow-500 text-gray-900'
@@ -87,14 +87,14 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
                   </div>
                   
                   {deploymentId !== 'N/A' && (
-                    <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/10">
                       <p className="text-xs text-white/50 mb-1">Deployment ID</p>
                       <p className="font-mono text-xs break-all">{deploymentId}</p>
                     </div>
                   )}
 
                   {resultMessage && (
-                    <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/10">
                       <p className="text-xs text-white/50 mb-1">Message</p>
                       <p className="text-sm">{resultMessage}</p>
                     </div>
@@ -103,10 +103,10 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
               </div>
             </main>
 
-            <footer className="flex items-center justify-between p-5 border-t border-white/10">
+            <footer className="flex items-center justify-between p-3 border-t border-white/10">
               <button
                 onClick={onClose}
-                className="px-6 py-2 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
+                className="px-3 py-1 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
               >
                 Close
               </button>

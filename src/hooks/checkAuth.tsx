@@ -16,12 +16,10 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   const [status, setStatus] = useState('Checking authentication...');
   const [isPopup, setIsPopup] = useState(false);
 
-  // Check if we're in popup or full page
   useEffect(() => {
     const checkContext = async () => {
       try {
         const url = window.location.href;
-        // Check if we're in the popup (small window) or full page
         setIsPopup(url.includes('/popup/') || window.innerWidth < 600);
       } catch (error) {
         setIsPopup(false);
@@ -31,7 +29,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
     checkContext();
   }, []);
 
-  // Handle logout
+  // logout
   const handleLogout = useCallback(async () => { 
     await api.logout();
     setIsAuthenticated(false);
@@ -39,7 +37,6 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
     setStatus('Logged out successfully');
   }, [api]);
 
-  // Open auth window and wait for wallet connection
   const initiateAuth = useCallback(async () => {
     setStatus('Opening authentication window...');
     
@@ -52,7 +49,6 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
         targetTab = existingTabs[0];
         await chrome.tabs.update(targetTab.id!, { active: true });
       } else {
-        // New tab with web app
         targetTab = await chrome.tabs.create({ 
           url: WEB_API_BASE_URL,
           active: false 
@@ -66,7 +62,6 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
         return;
       } 
 
-      // Send message to content script to open auth
       sendMessageWithRetry(targetTab.id, { action: 'open_auth' }, 5, 500)
         .then((response) => {
           if (response?.status === 'auth_opened') {
@@ -84,13 +79,12 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   useEffect(() => {
     let isMounted = true;
 
-    // Validate existing session
+  
     const checkSession = async () => {
       setIsChecking(true);
       setStatus('Loading...');
 
       try {
-        // if user has token
         const hasAuth = await api.isAuthenticated();
         
         if (!isMounted) return;
@@ -99,7 +93,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           setIsChecking(false);
           setStatus('Please connect your wallet');
           
-          // If in popup and not authenticated, open full page
+          
           if (isPopup) {
             chrome.tabs.create({ 
               url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
@@ -109,7 +103,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           return;
         }
 
-        // Validate token 
+        
         const validationResult = await api.validateSession();
         
         if (!isMounted) return;
@@ -122,7 +116,6 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           setStatus('Session validated successfully');
           setIsChecking(false);
         } else {
-          // Session invalid, try to refresh
           setStatus('Session expired, refreshing...');
           const refreshResult = await api.refreshSession();
           
@@ -135,11 +128,11 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
             setStatus('Session refreshed successfully');
             setIsChecking(false);
           } else {
-            // Refresh failed, need new auth
+            
             setIsChecking(false);
             setStatus('Session expired, please reconnect wallet');
             
-            // If in popup and session expired, open full page
+            
             if (isPopup) {
               chrome.tabs.create({ 
                 url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
@@ -166,7 +159,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
 
     checkSession();
 
-    // listener for wallet connection events
+    
     const listener = new MessageListener();
     
     listener.onMessage((type, data) => {
@@ -207,24 +200,23 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
     };
   }, [isPopup]);
 
-  // Auto-refresh token before expiry
+  
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    // Check token expiry 
     const intervalId = setInterval(async () => {
       const hasAuth = await api.isAuthenticated();
       
       if (!hasAuth) {
-        // Token expired
+        
         const refreshResult = await api.refreshSession();
         
         if (!refreshResult) {
-          // Refresh failed, logout
+          
           setIsAuthenticated(false);
           setStatus('Session expired, please reconnect wallet');
           
-          // If in popup, redirect to full page
+          
           if (isPopup) {
             chrome.tabs.create({ 
               url: chrome.runtime.getURL('src/pages/main/index.html#auth') 
@@ -235,7 +227,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           console.log('Token refreshed successfully');
         }
       }
-    }, 5 * 60 * 1000); // 5 minutes
+    }, 5 * 60 * 1000); // 5 minutes 
 
     return () => {
       console.log('Cleaning up token refresh interval');
@@ -246,10 +238,10 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   // loading state
   if (isChecking) {
     return (
-      <div className="w-80 h-[600px] flex items-center justify-center bg-gray-50">
+      <div className="w-[300px] min-h-[700px] flex items-center justify-center bg-gray-800">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600 mb-3"></div>
-          <p className="text-gray-700 text-sm">Loading...</p>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-b-transparent border-cyan-600 mb-3"></div>
+          <p className="text-gray-50 text-sm">Loading...</p>
         </div>
       </div>
     );
@@ -258,16 +250,16 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
   // connect wallet screen - only shown in full page mode
   if (!isAuthenticated && !isPopup) { 
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="rounded-2xl glassmorphism-card border border-gray-200 p-8 max-w-md w-full mx-4">
+      <div className="flex items-center justify-center min-h-screen bg-gray-800">
+        <div className="rounded-2xl glassmorphism-card border border-gray-900 p-8 max-w-md w-full mx-4">
           <div className="text-center mb-6">
             <div className="rounded-full flex items-center justify-center my-16 mx-auto mb-4">
               <img src="public/icons/icon128.png" alt="Jarvis" className="w-16 h-16" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-50 mb-2">
               Welcome To Jarvis
             </h1>
-            <p className="text-sm text-gray-600 mb-6">
+            <p className="text-sm text-gray-50 mb-6">
               {status}
             </p>
           </div>
@@ -275,7 +267,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
           <button
             onClick={initiateAuth}
             disabled={api.loading}
-            className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
           >
             {api.loading ? (
               <>
@@ -299,7 +291,7 @@ export const CheckAuth = ({ children }: CheckAuthProps) => {
     );
   }
 
-  // If not authenticated and in popup, return null (will redirect)
+  
   if (!isAuthenticated && isPopup) {
     return null;
   }

@@ -3,13 +3,9 @@ import { motion } from 'framer-motion'
 import { Wallet } from 'lucide-react'
 import Alert from '@/components/ui/Alert'
 import Logout from '@/components/modals/Logout'
-import { useTheme } from '@/components/layout/ThemeContext'
+
 
 const Settings = () => {
-
-  const { theme, toggleTheme, loading } = useTheme();
-  
-  if (loading) return null; // avoid flicker on load
 
   // fields
   const [isUpdateProfile, setIsUpdateProfile] = useState(false)
@@ -40,7 +36,7 @@ const Settings = () => {
 
 
   return (
-    <div className="flex w-[500px] min-h-[700px]">
+    <div className="flex ">
       <main className="flex-1 p-8 flex flex-col">
 
         {/* Header */}
@@ -50,7 +46,7 @@ const Settings = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="flex justify-between items-center mb-8"
         >
-          <h2 className={`text-3xl font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>
+          <h2 className={`text-3xl font-bold text-white`}>
             Settings
           </h2>
                   
@@ -63,34 +59,34 @@ const Settings = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className={`glassmorphism-card ${ theme === "light" ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} p-4 mx-8 flex flex-col  overflow-hidden border shadow-lg rounded-xl p-6 flex flex-col justify-between transition-all duration-300`}
+              className={`glassmorphism-card border-white/10 text-white bg-gray-900 opacity-5 p-4 mx-8 flex flex-col  overflow-hidden border shadow-lg rounded-xl p-6 flex flex-col justify-between transition-all duration-300`}
             >
               <div>
-                <h2 className={`text-2xl font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>Update</h2>
+                <h2 className={`text-2xl font-bold text-white `}>Update</h2>
                 <main>
                   <div className='m-4'>
-                    <label className={`block  ${ theme === "light" ? 'text-black/70' : 'text-white/70'} mb-1`}>Email</label>
+                    <label className={`block  text-white/70 mb-1`}>Email</label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full ${ theme === "light" ? 'bg-transparent border-black/10 text-black ' : 'bg-gray-900 border-white/10 text-white '} px-3 py-2 rounded  border `}
+                      className={`w-full bg-gray-900 border-white/10 text-white  px-3 py-2 rounded  border `}
                     />
                   </div>
                   <div className='m-4'>
-                    <label className={`block ${ theme === "light" ? 'text-black/70' : 'text-white/70'} mb-1`}>Phone</label>
+                    <label className={`block text-white/70 mb-1`}>Phone</label>
                     <input
                       type="number"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className={`w-full ${ theme === "light" ? 'bg-transparent border-black/10 text-black ' : 'bg-gray-900 border-white/10 text-white '} px-3 py-2 rounded  border `}
+                      className={`w-full bg-gray-900 border-white/10 text-white  px-3 py-2 rounded  border `}
                     />
                   </div>
                 </main>
                 <footer className="flex items-center justify-between p-5">
                   <button
                     onClick={() => setIsUpdateProfile(false)} 
-                    className={`px-6 py-2 rounded-lg ${ theme === "light" ? 'text-black border-black/20' : 'text-white border-white/20'}  font-bold bg-transparent border hover:bg-white/10 transition-colors disabled:opacity-50`}
+                    className={`px-6 py-2 rounded-lg text-white border-white/20  font-bold bg-transparent border hover:bg-white/10 transition-colors disabled:opacity-50`}
                   >
                     Cancel
                   </button>
@@ -140,23 +136,23 @@ const Settings = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className={`glassmorphism-card ${ theme === "light" ? "border-black/10 text-black bg-indigo-100 opacity-20" : "border-white/10 text-white bg-gray-900 opacity-5"} p-4 mx-8 flex flex-col  overflow-hidden border shadow-lg rounded-xl p-6 flex flex-col justify-between transition-all duration-300`}
+              className={`glassmorphism-card border-white/10 text-white bg-gray-900 opacity-5 p-4 mx-8 flex flex-col  overflow-hidden border shadow-lg rounded-xl p-6 flex flex-col justify-between transition-all duration-300`}
             >
               <div>
                 <div className="flex justify-between mx-3 mt-2">
-                  <h2 className={`text-2xl font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>Profile</h2>
+                  <h2 className={`text-2xl font-bold text-white `}>Profile</h2>
                   <div
-                    className={`flex ${ theme === "light" ? "bg-gray-400" : "bg-gray-800"} cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold tracking-[0.015em] transition-colors hover:bg-opacity-80`}
+                    className={`flex bg-gray-800 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold tracking-[0.015em] transition-colors hover:bg-opacity-80`}
                   >
                     <Wallet size={24} className='text-cyan-800' />
-                    <span className={`truncate  ${ theme === "light" ? 'text-black' : 'text-white'}`}>0x123...abc</span>
+                    <span className={`truncate  text-white `}>0x123...abc</span>
                   </div>
                 </div>
                 <div className="flex flex-col my-8 my-4">
                   <div className="grid grid-cols-1 gap-4 p-2 m-2">
-                    <p><span className={`font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>Email:</span> example@gmail.con</p>
-                    <p><span className={`font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>Phone:</span> Not Found</p>
-                    <p><span className={`font-bold ${ theme === "light" ? 'text-black' : 'text-white'}`}>Created At:</span> 2025-09-01T20:58:00.123456Z</p>
+                    <p><span className={`font-bold text-white `}>Email:</span> example@gmail.con</p>
+                    <p><span className={`font-bold text-white `} >Phone:</span> Not Found</p>
+                    <p><span className={`font-bold text-white `}>Created At:</span> 2025-09-01T20:58:00.123456Z</p>
                   </div>
                 </div>
                 <footer className="flex items-center justify-between p-5">
@@ -164,13 +160,13 @@ const Settings = () => {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => setIsUpdateProfile(true)} 
-                      className={`px-6 py-2 rounded-lg ${ theme === "light" ? 'text-black border-black/20' : 'text-white border-white/20'}  font-bold bg-transparent border hover:bg-white/10 transition-colors disabled:opacity-50`}             
+                      className={`px-6 py-2 rounded-lg text-white border-white/20  font-bold bg-transparent border hover:bg-white/10 transition-colors disabled:opacity-50`}             
                     >
                       Update
                     </button>
                     <button
                       onClick={() => setIsLogOutOPen(true)} 
-                      className={`px-6 py-2 rounded-lg font-bold flex items-center justify-center gap-2 ${ theme === "light" ? 'text-white' : 'text-black'} bg-red-500 hover:bg-red-600 hover:text-white shadow-lg shadow-red-200/20 disabled:opacity-50`}
+                      className={`px-6 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-red-500 hover:bg-red-600 hover:text-white shadow-lg shadow-red-200/20 disabled:opacity-50`}
                     >
                       Logout
                     </button>
