@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTheme } from './ThemeContext'
 import { useRouter } from '@/hooks/RouterContext' // Import the router hook
 import { 
   LayoutDashboardIcon, 
@@ -24,14 +23,14 @@ const routes: Route[] = [
 ]
 
 const Sidebar: React.FC = () => {
-  const { theme, loading } = useTheme()
+  
   const { currentRoute, navigate } = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  if (loading) return null
+  
 
   const getIcon = (title: string) => {
-    const iconClass = theme === 'light' ? 'text-black' : 'text-white'
+    const iconClass = 'text-white'
     switch(title) {
       case 'Dashboard':
         return <LayoutDashboardIcon size={18} className={iconClass} />
@@ -56,18 +55,14 @@ const Sidebar: React.FC = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className={`lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg ${
-          theme === 'light' ? 'bg-gray-100 text-black' : 'bg-gray-900 text-white'
-        } shadow-md`}
+        className={`lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-gray-900 text-white shadow-md`}
       >
         {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
       </button>
 
       {/* Desktop Sidebar */}
       <aside
-        className={`hidden lg:block w-64 ${
-          theme === 'light' ? 'bg-gray-100 border-gray-200' : 'bg-gray-900 border-gray-800'
-        } shadow-sm border-r`}
+        className={`hidden lg:block w-64 bg-gray-900 border-gray-800 shadow-sm border-r`}
       >
         <nav className="mt-8">
           <div className="px-4">
@@ -84,10 +79,10 @@ const Sidebar: React.FC = () => {
                     : 'font-medium'
                 }`}
               >
-                <div className={theme === 'light' ? 'text-black' : 'text-white'}>
+                <div className={`text-white`}>
                   <span>{getIcon(route.title)}</span>
                 </div>
-                <span className={theme === 'light' ? 'text-black' : 'text-white'}>
+                <span className={`text-white`}>
                   {route.title}
                 </span>
               </motion.a>
@@ -115,9 +110,7 @@ const Sidebar: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`lg:hidden fixed left-0 top-0 bottom-0 w-64 z-40 ${
-                theme === 'light' ? 'bg-gray-100 border-gray-200' : 'bg-gray-900 border-gray-800'
-              } shadow-lg border-r`}
+              className={`lg:hidden fixed left-0 top-0 bottom-0 w-64 z-40 bg-gray-900 border-gray-800 shadow-lg border-r`}
             >
               <nav className="mt-20">
                 <div className="px-4">
@@ -134,10 +127,10 @@ const Sidebar: React.FC = () => {
                           : 'font-medium'
                       }`}
                     >
-                      <div className={theme === 'light' ? 'text-black' : 'text-white'}>
+                      <div className={`text-white`}>
                         <span>{getIcon(route.title)}</span>
                       </div>
-                      <span className={theme === 'light' ? 'text-black' : 'text-white'}>
+                      <span className={`text-white`}>
                         {route.title}
                       </span>
                     </motion.a>
