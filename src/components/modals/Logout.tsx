@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/AuthContext";
 
 interface LogoutProps {
   isOPen: boolean;
-  onClose: () => void; 
+  onClose: () => void;  
   onAlert: (type: "success" | "error" | "info", message: string) => void
 }
 
@@ -35,11 +35,11 @@ const Logout: React.FC<LogoutProps> = ({ isOPen, onClose, onAlert}) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 40 }}
                   transition={{ duration: 0.4 }}
-                  className="w-[350px] max-w-4xl h-[350px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
+                  className="w-[300px] max-w-4xl h-[350px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
                 >
                     {/* Header */}
-                    <header className="flex items-center justify-between p-6 border-b border-white/10">
-                        <h2 className="text-2xl font-bold tracking-tight text-white">
+                    <header className="flex items-center justify-between p-4 border-b border-white/10">
+                        <h2 className="text-xl font-bold tracking-tight text-white">
                             Confirm Logout
                         </h2>
                         <button
@@ -50,7 +50,7 @@ const Logout: React.FC<LogoutProps> = ({ isOPen, onClose, onAlert}) => {
                             <X size={24} />
                         </button>
                     </header>
-                    <main className="flex-grow p-6 overflow-y-auto text-white space-y-6">
+                    <main className="flex-grow p-4 overflow-y-auto text-white space-y-6">
                       {/* Warning */}
                       <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg">
                         <AlertTriangle size={20} className="h-5 w-5 mt-0.5 flex-shrink-0"/>
@@ -60,7 +60,7 @@ const Logout: React.FC<LogoutProps> = ({ isOPen, onClose, onAlert}) => {
                         </p>
                       </div>
                     </main>
-                    <footer className="flex items-center justify-between p-5 border-t border-white/10">
+                    <footer className="flex items-center justify-between p-4 border-t border-white/10">
                       <button
                         onClick={onClose}
                         disabled={isLogingOut}
@@ -71,12 +71,12 @@ const Logout: React.FC<LogoutProps> = ({ isOPen, onClose, onAlert}) => {
                       <button 
                         onClick={handleLogOut}
                         disabled={isLogingOut}
-                        className="px-6 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-red-500 hover:bg-red-500 hover:text-white shadow-lg shadow-red-200/20 disabled:opacity-50"
+                        className="px-4 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-red-500 hover:bg-red-500 hover:text-white shadow-lg shadow-red-200/20 disabled:opacity-50"
                       >
                         {isLogingOut ? (
                           <>
                             <svg
-                              className="animate-spin h-5 w-5 text-white"
+                              className="animate-spin h-4 w-4 text-white"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"

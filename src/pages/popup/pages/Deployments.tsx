@@ -8,7 +8,7 @@ import Deployment from '@/components/common/Deployment'
 import { useApi } from '@/hooks/useApi'
 import type { DeploymentListItem } from '@/types/api' 
 
-const Deployments: React.FC = () => {
+const Deployments: React.FC = () => { 
   const { listDeployments, loading: apiLoading } = useApi();
   
   const [deployments, setDeployments] = useState<DeploymentListItem[]>([]);

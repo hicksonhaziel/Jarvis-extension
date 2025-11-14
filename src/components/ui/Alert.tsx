@@ -34,9 +34,9 @@ const Alert: React.FC<AlertProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, x: 200 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 200 }}
+          exit={{ opacity: 0, x: 40 }}
           transition={{ duration: 0.4 }}
           className={`fixed top-[80px] right-[150px] px-4 py-3 rounded-lg backdrop-blur border shadow-lg ${styles}`}
         >

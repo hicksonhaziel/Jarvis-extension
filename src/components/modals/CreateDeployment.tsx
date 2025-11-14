@@ -98,10 +98,10 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.4 }}
-            className={`w-[250px] max-w-4xl h-[275px] border-black/10 text-white bg-gray-900 opacity-5 flex flex-col  glassmorphism-card overflow-hidden border shadow-xl rounded-xl duration-300`}
+            className={`w-[300px] max-w-4xl h-[400px] border-black/10 text-white bg-gray-900 opacity-5 flex flex-col  glassmorphism-card overflow-hidden border shadow-xl rounded-xl duration-300`}
           >
             {/* Header */}
-            <header className="flex items-center justify-between p-3 border-b border-white/10">
+            <header className="flex items-center justify-between p-4 border-b border-white/10">
               <h2 className="text-1xl font-bold tracking-tight text-white">
                 Create New Deployment
               </h2>
@@ -114,15 +114,15 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
             </header>
 
             {/* Progress */}
-            <div className="p-3">
-              <div className="flex items-center justify-between mb-1">
+            <div className="p-4">
+              <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-medium text-white/70">
                   Step {step} of 4
                 </p>
               </div>
-              <div className="w-full bg-gray-900 rounded-full h-1">
+              <div className="w-full bg-gray-900 rounded-full h-2">
                 <motion.div
-                  className="bg-red-500 h-1 rounded-full"
+                  className="bg-red-500 h-2 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${(step / 4) * 100}%` }}
                   transition={{ duration: 0.4 }}
@@ -131,7 +131,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
             </div>
 
             {/* Steps */}
-            <main className="flex-grow p-3 overflow-y-auto">
+            <main className="flex-grow p-4 overflow-y-auto">
               <AnimatePresence mode="wait">
                 {/* Step 1*/}
                 {step === 1 && (
@@ -162,7 +162,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                             }
                           />
                           <div
-                            className={`p-3 flex justify-center rounded-lg text-center border-1 transition-all duration-300
+                            className={`p-4 flex justify-center rounded-lg text-center border-1 transition-all duration-300
                             ${
                               selectedType === deployment_type.value
                                 ? "border-red-200 bg-gray-900/50"
@@ -197,7 +197,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                         <input
                           value={image}
                           onChange={(e) => setImage(e.target.value)}
-                          className="w-full px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                          className="w-full px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                           placeholder="nginx:latest"
                         />
                       </div>
@@ -209,7 +209,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                             step="0.1"
                             value={cpu}
                             onChange={(e) => setCpu(parseFloat(e.target.value))}
-                            className="w-full px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                            className="w-full px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                           />
                         </div>
                         <br />
@@ -225,7 +225,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                             <select
                               value={memoryUnit}
                               onChange={(e) => setMemoryUnit(e.target.value)}
-                              className="px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                              className="px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                             >
                               <option value="MB">MB</option>
                               <option value="GB">GB</option>
@@ -241,12 +241,12 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                               type="number"
                               value={storage}
                               onChange={(e) => setStorage(parseFloat(e.target.value))}
-                              className="flex-1 px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                              className="flex-1 px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                             />
                             <select
                               value={storageUnit}
                               onChange={(e) => setStorageUnit(e.target.value)}
-                              className="px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                              className="px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                             >
                               <option value="MB">MB</option>
                               <option value="GB">GB</option>
@@ -260,7 +260,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                           <input
                             value={ports}
                             onChange={(e) => setPorts(e.target.value)}
-                            className="w-full px-3 py-2 rounded bg-gray-900 border border-white/10 text-white"
+                            className="w-full px-4 py-2 rounded bg-gray-900 border border-white/10 text-white"
                             placeholder="80, 443"
                           />
                         </div>
@@ -354,11 +354,11 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
               </AnimatePresence>
             </main>
 
-            <footer className="flex items-center justify-between p-3 border-t border-white/10">
+            <footer className="flex items-center justify-between p-4 border-t border-white/10">
               <button
                 onClick={onClose}
                 disabled={isDeploying}
-                className="px-3 py-1 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
+                className="px-4 py-1 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -366,7 +366,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                <button
                  onClick={prevStep}
                  disabled={step === 1 || isDeploying}
-                 className={`px-3 py-1 rounded-lg font-bold ${
+                 className={`px-4 py-2 rounded-lg font-bold ${
                    step === 1
                    ? "text-white/50 bg-gray-900 cursor-not-allowed"
                    : "text-white bg-transparent border border-white/20 hover:bg-white/10"
@@ -379,7 +379,7 @@ const CreateDeployment: React.FC<CreateDeploymentProps> = ({ isOPen, onClose, on
                   <button
                     onClick={handleDeploy}
                     disabled={isDeploying}
-                    className="px-3 py-1 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-[#00D2FF] hover:bg-[#00D2FF] hover:text-white shadow-lg shadow-cyan-200/20 disabled:opacity-50"
+                    className="px-4 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-black bg-[#00D2FF] hover:bg-[#00D2FF] hover:text-white shadow-lg shadow-cyan-200/20 disabled:opacity-50"
                   >
                     {isDeploying ? (
                       <>

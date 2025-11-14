@@ -11,7 +11,7 @@ interface VoiceCommandResultProps {
 }
 
 const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, result, onClose}) => {
-  // Safely extract values from result object
+  
   const commandAction = result?.command?.action || 'N/A';
   const commandImage = result?.command?.image || 'N/A';
   const resultStatus = result?.result?.status || result?.status || 'N/A';
@@ -28,10 +28,10 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.4 }}
-            className="w-[250px] max-w-4xl h-[275px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
+            className="w-[300px] max-w-4xl h-[400px] flex flex-col glassmorphism-card overflow-hidden border border-white/10 shadow-2xl rounded-xl duration-300"
           >
             {/* Header */}
-            <header className="flex items-center justify-between p-3 border-b border-white/10">
+            <header className="flex items-center justify-between p-4 border-b border-white/10">
               <h2 className="text-xl font-bold tracking-tight text-white">
                 Voice Command Result
               </h2>
@@ -44,13 +44,13 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
             </header>
 
             
-            <main className="flex-grow p-3 overflow-y-auto text-white space-y-6">
+            <main className="flex-grow p-4 overflow-y-auto text-white space-y-6">
 
               {/* Voice Input */}
               <div className="space-y-2">
                 <div>
                   <p className="text-xs uppercase text-white/50 mb-1">Voice Input</p>
-                  <p className="font-mono text-sm bg-white/5 p-3 rounded-lg border border-white/10">
+                  <p className="font-mono text-sm bg-white/5 p-4 rounded-lg border border-white/10">
                     {text || 'No text provided'}
                   </p>
                 </div>
@@ -103,10 +103,10 @@ const VoiceCommandResult: React.FC<VoiceCommandResultProps> = ({ isOPen, text, r
               </div>
             </main>
 
-            <footer className="flex items-center justify-between p-3 border-t border-white/10">
+            <footer className="flex items-center justify-between p-4 border-t border-white/10">
               <button
                 onClick={onClose}
-                className="px-3 py-1 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
+                className="px-4 py-2 rounded-lg text-white font-bold bg-transparent border border-white/20 hover:bg-white/10 transition-colors disabled:opacity-50"
               >
                 Close
               </button>

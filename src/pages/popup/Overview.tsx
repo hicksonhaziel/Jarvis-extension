@@ -74,7 +74,7 @@ const Overview = () => {
   }
 
   // while checking
-  if (isChecking) {
+  if (isChecking) { 
     return (
       <div className="w-full h-[600px]"></div>
     )
